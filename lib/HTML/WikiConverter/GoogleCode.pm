@@ -24,11 +24,11 @@ markup. See L<HTML::WikiConverter> for additional usage details.
 
 =head1 VERSION
 
-Version 0.10
+Version 0.11
 
 =cut 
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 
 =head1 FUNCTIONS
@@ -98,7 +98,8 @@ Returns the conversion L</ATTRIBUTES> particular to the GoogleCode dialect
 
 sub attributes { {
   escape_autolink => {default => [], type => ARRAYREF},
-  summary => {default => 0, type => SCALAR}
+  summary => {default => 0, type => SCALAR},
+  labels => {default => [], type => ARRAYREF}
 }}
 
 sub _li_start {
@@ -215,10 +216,15 @@ sub postprocess_output {
   my( $self, $outref ) = @_;
   $$outref =~ s/($url_re)\[\[BR\]\]/$1 [[BR]]/go;
 
-	# add summary commenton first line in wiki output
+	# add 'summary' and 'labels' wiki markup elements
+	my $additional_markup = '';
 	if($self->summary) {
-		$$outref = '# summary ' . $self->summary . "\n\n$$outref";
+		$additional_markup = '#summary ' . $self->summary . "\n";
 	}
+	if(@{$self->labels}) {
+		$additional_markup .= '#labels ' . join(',', @{$self->labels}) . "\n";
+	}
+	$$outref = $additional_markup . $$outref;
 }
 
 
@@ -236,8 +242,14 @@ autolink-ing should be escaped by preceeding the word with a !.
 
 =head2 summary
 
-Produce a summary element in the wiki markup.  The summary element
-appears in the index page of the Google wiki.
+Text to be produced in the 'summary' wiki markup element.  The summary element 
+appears in the index page of the project's wiki.
+
+=head2 labels
+
+A reference to an array of text values to be produced in the 'labels' wiki markup 
+element.  Allowed values for a project can be found on the project's Google 
+Code web-site on the C<Administer/Wiki> tab.
 
 =head1 AUTHOR
 
