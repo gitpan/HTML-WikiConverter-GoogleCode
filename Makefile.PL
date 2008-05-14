@@ -9,11 +9,12 @@ WriteMakefile(
     ABSTRACT_FROM       => 'lib/HTML/WikiConverter/GoogleCode.pm',
     PL_FILES            => {},
     PREREQ_PM => {
-        'Test::More' => 0,
+				'Test::More' => 0,
         'HTML::WikiConverter' => 0.61,
         'Params::Validate' => 0,
         'URI' => 0
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'HTML-WikiConverter-GoogleCode-*' },
+    LICENSE	            => 'perl'
 );

@@ -18,11 +18,9 @@ Or from the command line:
   % html2wiki --dialect GoogleCode input.html > output.wiki
   
 
-CHANGES IN 0.11
+CHANGES IN 0.12
 
-    * Removed failing test (regression.t)
-    * Fixed summary wiki element (removed extra whitespace)
-    * Added labels wiki element
+    * Added a LICENSE file
 
 
 INSTALLATION
